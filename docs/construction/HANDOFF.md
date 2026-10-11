@@ -1,7 +1,7 @@
 # Handoff — 学程
 
 ## Current State
-v1.0.2（修复休息块插入位置）已完成，待合并回 main。
+v1.0.2 已合并 main（合并提交 be709cd）。全部功能可用、测试全绿。
 
 ## Completed
 - Phase 1–6 全部完成（壳子 / 模型与存储 / 待办清单 / 时间轴+番茄钟 / 提醒 / 打磨验证）
@@ -12,7 +12,7 @@ v1.0.2（修复休息块插入位置）已完成，待合并回 main。
 无。
 
 ## Next Tasks
-无（v1.0.2 合并回 main 后即最新）。
+无（如需新功能/修改，从 main 开新分支继续）。
 
 ## Required Reading
 docs/product/PRODUCT_REQUIREMENTS.md → docs/construction/ARCHITECTURE.md → docs/construction/CONSTRUCTION_PLAN.md → 本文件
@@ -24,16 +24,16 @@ xuecheng/index.html、xuecheng/js/app.js（视图控制器）、xuecheng/js/sche
 自动化未建立；浏览器测试页 task 9/9、scheduler 16/16 全绿，手动回归通过。
 
 ## Git State
-分支 fix/xuecheng-v1.0.2（基于 main d31ffd7）。
+main 最新（be709cd，已推送 origin/main）。分支 feature/xuecheng、fix/xuecheng-v1.0.1、fix/xuecheng-v1.0.2 保留。
 
 ## Backup Branch
 backup/pre-xuecheng-20261011（已推送）
 
 ## Latest Commit
-d185a55（v1.0.2 修复，待推送）
+main: be709cd（merge: 学程 v1.0.2 合并到 main）
 
 ## Push Status
-待推送
+已推送 origin/main
 
 ## Working Tree
 仅剩未跟踪项 .claude/、claude（不触碰）
