@@ -33,7 +33,7 @@
 - Commit and push.
 
 ## Current Phase
-Phase 6: 打磨与验证
+全部 6 个 Phase 完成；下一步合并 feature/xuecheng 到 main
 
 ## Prohibitions
 - No force push.

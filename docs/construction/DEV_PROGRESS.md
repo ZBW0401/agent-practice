@@ -4,6 +4,46 @@ Append-only entries. Latest first.
 
 ---
 
+## 2026-10-11 10:21 / Phase 6 / 完成
+
+状态：Complete（打磨与验证）。提交 62583d1（待推送）。成功标准三条全部满足，测试全绿（task 9/9、scheduler 12/12）。详见 LOG.md。
+
+---
+
+## 2026-10-11 10:21 / Phase 6 / Start Plan
+
+### Objective
+打磨与验证：边界情况修复 + 版本定版 + 文档漂移修正 + 最终回归。
+
+### Affected Layers
+领域层（scheduler.js 边界修复）、表现层（app.js 版本定版 1.0.0）、测试（scheduler.test.html 补回归用例）。
+
+### Repository State
+分支 feature/xuecheng；Phase 5 已提交 034ea18。
+
+### Planned Files
+修改 scheduler.js（番茄休息=0 时不插入零时长休息块）、app.js（版本 0.4.0 → 1.0.0）、scheduler.test.html（+1 回归用例）。
+
+### Tests
+`git diff --check` + 浏览器单元测试（task 9/9、scheduler 12/12）+ 手动全量回归 + 数据刷新不丢验证。
+
+### Git Baseline
+034ea18
+
+### Backup Branch
+backup/pre-xuecheng-20261011（已推送）
+
+### Rollback Plan
+`git revert` 本 Phase 提交。
+
+### Acceptance Criteria
+成功标准三条全部满足：基本功能正常、数据刷新不丢、界面整洁清爽。
+
+### Explicit Exclusions
+任何新功能；多用户/账号/云同步；后端。
+
+---
+
 ## 2026-10-11 10:11 / Phase 5 / 完成
 
 状态：Complete（提醒）。提交 7763c77，已推送。测试提醒触发正常。详见 LOG.md。

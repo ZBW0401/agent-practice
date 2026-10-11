@@ -4,6 +4,53 @@ Append-only. Latest first.
 
 ---
 
+## 2026-10-11 10:21 / Phase 6 / Work Log
+
+### Plan Replay
+打磨与验证：边界情况修复 + 版本定版 + 文档漂移修正 + 最终回归。
+
+### Actual Changes
+- scheduler.js：修复「番茄休息=0」时仍插入零时长休息块的边界 bug（仅 remaining>0 且 brk>0 才插休息）
+- app.js：版本 0.4.0 → 1.0.0（首个可交付版）
+- scheduler.test.html：新增 1 条回归用例（11 → 12）
+
+### Files Changed
+xuecheng/js/scheduler.js、xuecheng/js/app.js、xuecheng/test/scheduler.test.html
+
+### Test Log
+- `git diff --check`：通过（exit 0）
+- 浏览器单元测试：task.test.html 9/9、scheduler.test.html 12/12（用户确认「全绿」）
+- 手动全量回归：新建/勾选/删除/时间轴排布/番茄配比/刷新持久化/「番茄休息=0」边界，均正常（用户确认「全绿」）
+
+### Failures
+无（本轮发现的边界 bug 见下，已修复）。
+
+### Fixes
+- 番茄休息=0 时插入零时长休息块 → 改为 brk>0 才插休息段。
+
+### Retests
+修复后 scheduler.test.html 12/12 全绿；主页面「番茄休息=0」手动走查无零时长块。
+
+### Documentation Drift
+无。ARCHITECTURE.md 分层与实现完全一致；产品需求无变更。
+
+### Git Status
+- 分支：feature/xuecheng
+- 基线：034ea18
+- 提交：62583d1（待推送）
+- 未跟踪项 .claude/、claude 保持不触碰
+
+### Rollback Judgment
+无需回退。
+
+### Risks
+无新增。既有风险（提醒仅页面打开时触发）不变。
+
+### Next Step
+全部 6 个 Phase 完成。下一步：将 feature/xuecheng 合并回 main（合并前先与用户确认）。
+
+---
+
 ## 2026-10-11 10:11 / Phase 5 / Work Log
 
 ### Plan Replay
