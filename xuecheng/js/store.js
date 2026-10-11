@@ -51,9 +51,41 @@
     }
   }
 
+  function loadSettings() {
+    if (!storageAvailable()) {
+      return null;
+    }
+    try {
+      var raw = window.localStorage.getItem(KEYS.settings);
+      if (!raw) {
+        return null;
+      }
+      return JSON.parse(raw);
+    } catch (e) {
+      console.warn('[学程] 读取设置失败', e);
+      return null;
+    }
+  }
+
+  function saveSettings(settings) {
+    if (!storageAvailable()) {
+      console.warn('[学程] localStorage 不可用，设置未持久化');
+      return false;
+    }
+    try {
+      window.localStorage.setItem(KEYS.settings, JSON.stringify(settings));
+      return true;
+    } catch (e) {
+      console.warn('[学程] 保存设置失败', e);
+      return false;
+    }
+  }
+
   NS.store = {
     KEYS: KEYS,
     loadTasks: loadTasks,
-    saveTasks: saveTasks
+    saveTasks: saveTasks,
+    loadSettings: loadSettings,
+    saveSettings: saveSettings
   };
 })();

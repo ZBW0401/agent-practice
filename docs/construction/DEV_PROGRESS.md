@@ -4,6 +4,40 @@ Append-only entries. Latest first.
 
 ---
 
+## 2026-10-11 10:05 / Phase 4 / Start Plan
+
+### Objective
+时间轴自动排布 + 番茄钟休息：scheduler.js 排程引擎 + 设置 UI + 时间轴渲染。
+
+### Affected Layers
+领域层（scheduler.js）、数据访问层（store.js 设置）、表现层（index.html 设置弹窗、style.css、app.js）。
+
+### Repository State
+分支 feature/xuecheng；Phase 3 已提交 1815e64。
+
+### Planned Files
+新增 xuecheng/js/scheduler.js、xuecheng/test/scheduler.test.html；修改 store.js（设置持久化）、index.html（设置按钮+弹窗+时间轴）、style.css（时间轴样式）、app.js（时间轴渲染+设置）。
+
+### Tests
+浏览器单元测试 scheduler.test.html + `git diff --check` + 手动走查（排布、设置、刷新）。
+
+### Git Baseline
+1815e64
+
+### Backup Branch
+backup/pre-xuecheng-20261011（已推送）
+
+### Rollback Plan
+`git revert` 本 Phase 提交。
+
+### Acceptance Criteria
+排布合理、休息自动插入、配比可改、设置持久化。
+
+### Explicit Exclusions
+提醒（Phase 5）。
+
+---
+
 ## 2026-10-11 09:59 / Phase 3 / 完成
 
 状态：Complete（待办清单视图）。提交 d4af3e6，已推送。手动走查通过。详见 LOG.md。
