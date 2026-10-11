@@ -4,6 +4,40 @@ Append-only entries. Latest first.
 
 ---
 
+## 2026-10-11 09:54 / Phase 2 / Start Plan
+
+### Objective
+定义 Task 模型（字段校验）+ localStorage 持久化。
+
+### Affected Layers
+领域层（task.js）、数据访问层（store.js）。
+
+### Repository State
+分支 feature/xuecheng；Phase 1 已提交 56bf5d7。
+
+### Planned Files
+xuecheng/js/task.js、xuecheng/js/store.js、xuecheng/test/task.test.html；修改 index.html（加载脚本）、app.js（冒烟日志）。
+
+### Tests
+浏览器单元测试页 task.test.html + `git diff --check`。
+
+### Git Baseline
+56bf5d7
+
+### Backup Branch
+backup/pre-xuecheng-20261011（已推送）
+
+### Rollback Plan
+`git revert` 本 Phase 提交；或切回 backup/pre-xuecheng-20261011。
+
+### Acceptance Criteria
+数据刷新不丢、字段校验生效、非法输入被拒。
+
+### Explicit Exclusions
+UI 渲染、时间轴、提醒。
+
+---
+
 ## 2026-10-11 09:44 / Phase 1 / 完成
 
 状态：Complete（静态壳子 + 施工文档）。提交 fcf0cb6，已推送。测试与结果见 LOG.md。
