@@ -4,6 +4,40 @@ Append-only entries. Latest first.
 
 ---
 
+## 2026-10-11 09:59 / Phase 3 / Start Plan
+
+### Objective
+待办清单视图：渲染任务、勾选完成、新建任务表单、删除。
+
+### Affected Layers
+表现层（index.html 弹窗、style.css、app.js 视图逻辑）。
+
+### Repository State
+分支 feature/xuecheng；Phase 2 已提交 c82f98d。
+
+### Planned Files
+修改 xuecheng/index.html（新增任务弹窗）、xuecheng/css/style.css（清单项/弹窗/表单样式）、重写 xuecheng/js/app.js（视图控制器）。
+
+### Tests
+`git diff --check` + 浏览器手动走查（新建/勾选/删除/刷新持久化）。
+
+### Git Baseline
+c82f98d
+
+### Backup Branch
+backup/pre-xuecheng-20261011（已推送）
+
+### Rollback Plan
+`git revert` 本 Phase 提交。
+
+### Acceptance Criteria
+清单正确显示、操作即时反映并持久化、非法输入被拒并提示。
+
+### Explicit Exclusions
+时间轴、提醒。
+
+---
+
 ## 2026-10-11 09:54 / Phase 2 / 完成
 
 状态：Complete（task.js + store.js + 单元测试页）。提交 8983f4e，已推送。测试 9/9 全绿。详见 LOG.md。
