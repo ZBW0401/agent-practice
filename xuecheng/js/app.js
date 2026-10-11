@@ -3,7 +3,7 @@
   'use strict';
 
   var NS = window.Xuecheng = window.Xuecheng || {};
-  NS.version = '1.0.1';
+  NS.version = '1.0.2';
 
   var T = NS.task;
   var S = NS.store;

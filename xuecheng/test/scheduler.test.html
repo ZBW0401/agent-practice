@@ -84,6 +84,19 @@
       var r6 = SCH.schedule([tDone, t1], s, now2);
       assert('完成后休息剩余 7 分钟先行', r6.blocks[0].kind === 'break' && r6.blocks[0].durationMin === 7);
 
+      // 完成非最前任务：不把休息插到第一个任务前面
+      var a = { id: 'a', subject: 'A', durationMin: 30, priority: 'high', difficulty: 'easy', restAfterMin: 10, completed: false };
+      var bDone = { id: 'b', subject: 'B', durationMin: 30, priority: 'medium', difficulty: 'easy', restAfterMin: 10, completed: true, completedAt: new Date(2026, 0, 1, 14, 0, 0).getTime() };
+      var c = { id: 'c', subject: 'C', durationMin: 30, priority: 'low', difficulty: 'easy', restAfterMin: 0, completed: false };
+      var now3 = new Date(2026, 0, 1, 14, 2, 0).getTime();
+      var r7 = SCH.schedule([a, bDone, c], s, now3);
+      assert('完成非最前任务不插休息到队首', r7.blocks[0].kind === 'study' && r7.blocks[0].taskId === 'a');
+
+      // 全部完成：无孤立休息块
+      var allDone = [{ id: 'x', subject: 'X', durationMin: 30, priority: 'high', difficulty: 'easy', restAfterMin: 10, completed: true, completedAt: new Date(2026, 0, 1, 14, 0, 0).getTime() }];
+      var now4 = new Date(2026, 0, 1, 14, 1, 0).getTime();
+      assert('全部完成无孤立休息块', SCH.schedule(allDone, s, now4).blocks.length === 0);
+
       var summary = document.createElement('p');
       summary.className = 'summary';
       summary.textContent = '通过 ' + pass + ' / 失败 ' + fail;
