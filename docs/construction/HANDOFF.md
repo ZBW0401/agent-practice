@@ -1,7 +1,7 @@
 # Handoff — 学程
 
 ## Current State
-v1.0.1（修复通知反复弹窗 + 时间轴锚定当前时间）已完成，待合并回 main。全部功能可用、测试全绿。
+v1.0.1 已合并 main（合并提交 aa246d5）。全部功能可用、测试全绿。
 
 ## Completed
 - Phase 1–6 全部完成（壳子 / 模型与存储 / 待办清单 / 时间轴+番茄钟 / 提醒 / 打磨验证）
@@ -11,7 +11,7 @@ v1.0.1（修复通知反复弹窗 + 时间轴锚定当前时间）已完成，�
 无。
 
 ## Next Tasks
-无（v1.0.1 合并回 main 后即最新）。
+无（如需新功能/修改，从 main 开新分支继续）。
 
 ## Required Reading
 docs/product/PRODUCT_REQUIREMENTS.md → docs/construction/ARCHITECTURE.md → docs/construction/CONSTRUCTION_PLAN.md → 本文件
@@ -23,16 +23,16 @@ xuecheng/index.html、xuecheng/js/app.js（视图控制器）、xuecheng/js/sche
 自动化未建立；浏览器测试页 task 9/9、scheduler 14/14 全绿，手动全量回归通过。
 
 ## Git State
-分支 fix/xuecheng-v1.0.1（基于 main e7a2cf2）；v1.0.0 已在 main（80a3f38）。
+main 最新（aa246d5，已推送 origin/main）。分支 feature/xuecheng、fix/xuecheng-v1.0.1 保留。
 
 ## Backup Branch
 backup/pre-xuecheng-20261011（已推送）
 
 ## Latest Commit
-5105659（v1.0.1 修复，待推送）
+main: aa246d5（merge: 学程 v1.0.1 合并到 main）
 
 ## Push Status
-待推送
+已推送 origin/main
 
 ## Working Tree
 仅剩未跟踪项 .claude/、claude（不触碰）
