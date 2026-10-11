@@ -1,0 +1,148 @@
+/* 学程 — 清爽简洁风（对标「不背单词」） */
+:root {
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --text: #1f2329;
+  --text-secondary: #8a919f;
+  --accent: #00b578;
+  --accent-soft: #e6f7f0;
+  --border: #eceef1;
+  --shadow: 0 1px 3px rgba(31, 35, 41, 0.06), 0 1px 2px rgba(31, 35, 41, 0.04);
+  --radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 顶部 */
+.app-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding-top: env(safe-area-inset-top, 0);
+}
+
+.app-header__inner {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 16px 20px;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.app-subtitle {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* 主体 */
+.app-main {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 16px 16px 96px;
+}
+
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 20px;
+  margin-bottom: 16px;
+}
+
+.card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.card__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.card__hint {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* 空状态 */
+.empty {
+  text-align: center;
+  padding: 24px 8px;
+  color: var(--text-secondary);
+}
+
+.empty__icon {
+  font-size: 32px;
+  margin: 0 0 8px;
+}
+
+.empty__text {
+  margin: 0;
+  font-size: 13px;
+}
+
+/* 待办 / 时间轴（Phase 3、4 填充） */
+.todo-list,
+.timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 悬浮新建按钮 */
+.fab {
+  position: fixed;
+  right: 20px;
+  bottom: calc(24px + env(safe-area-inset-bottom, 0));
+  width: 56px;
+  height: 56px;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 28px;
+  line-height: 1;
+  box-shadow: 0 6px 16px rgba(0, 181, 120, 0.35);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fab:active {
+  transform: scale(0.96);
+}
+
+/* 桌面端：居中留白 */
+@media (min-width: 640px) {
+  .app-header__inner,
+  .app-main {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}

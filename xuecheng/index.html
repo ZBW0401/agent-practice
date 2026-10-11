@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#00b578" />
+  <title>学程</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-header__inner">
+      <h1 class="app-title">学程</h1>
+      <p class="app-subtitle">今天也要劳逸结合</p>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <section class="card" aria-labelledby="todo-title">
+      <div class="card__head">
+        <h2 id="todo-title" class="card__title">待办清单</h2>
+        <span class="card__hint">0 项</span>
+      </div>
+      <div class="empty" data-view="todo-empty">
+        <p class="empty__icon">🗒️</p>
+        <p class="empty__text">还没有任务，点右下角 ＋ 新建一个吧</p>
+      </div>
+      <ul class="todo-list" data-view="todo-list" hidden></ul>
+    </section>
+
+    <section class="card" aria-labelledby="timeline-title">
+      <div class="card__head">
+        <h2 id="timeline-title" class="card__title">今日时间轴</h2>
+      </div>
+      <div class="empty" data-view="timeline-empty">
+        <p class="empty__icon">⏱️</p>
+        <p class="empty__text">排好的学习与休息会显示在这里</p>
+      </div>
+      <ol class="timeline" data-view="timeline" hidden></ol>
+    </section>
+  </main>
+
+  <button class="fab" type="button" aria-label="新建任务" title="新建任务">＋</button>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
