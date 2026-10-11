@@ -33,7 +33,7 @@
 - Commit and push.
 
 ## Current Phase
-v1.0.1 已合并 main；项目完成（后续改动从 main 开新分支）
+v1.0.2 修复完成（fix/xuecheng-v1.0.2，待合并 main）
 
 ## Prohibitions
 - No force push.

@@ -4,6 +4,54 @@ Append-only. Latest first.
 
 ---
 
+## 2026-10-11 10:52 / v1.0.2 修复 / Work Log
+
+### Plan Replay
+修复休息块插入位置错误：完成非最前任务会把休息插到队首；完成未排入任务会挤空其余任务。
+
+### Actual Changes
+- scheduler.js：pendingRestAfterCompleted 改为取「第一个未完成任务紧前」的已完成任务
+- scheduler.js：首部休息加可用时间窗上限（rest > endMin - cursor 时截断）
+- app.js：版本 1.0.1 → 1.0.2
+- scheduler.test.html：新增完成非最前任务、全部完成无孤立休息 2 条用例（14→16）
+
+### Files Changed
+xuecheng/js/scheduler.js、xuecheng/js/app.js、xuecheng/test/scheduler.test.html
+
+### Test Log
+- `git diff --check`：通过（exit 0）
+- 浏览器单元测试 scheduler.test.html：通过 16 / 失败 0（用户确认「全绿」）
+- 手动走查：勾掉靠后任务不再插休息到队首；勾掉未排入任务不再挤空其余任务（用户确认「全绿」）
+
+### Failures
+无（本轮为修复已上报问题）。
+
+### Fixes
+- 休息插到队首（完成非最前任务时）→ 只认队首紧前已完成任务
+- 未排入任务完成后挤空其余 → 同上根因修复 + 首部休息加窗口上限
+
+### Retests
+修复后 16/16 全绿 + 手动走查通过。
+
+### Documentation Drift
+无。
+
+### Git Status
+- 分支：fix/xuecheng-v1.0.2
+- 基线：d31ffd7（main）
+- 提交：d185a55（待推送）
+
+### Rollback Judgment
+无需回退。
+
+### Risks
+无新增。
+
+### Next Step
+合并 fix/xuecheng-v1.0.2 回 main。
+
+---
+
 ## 2026-10-11 10:36 / v1.0.1 修复 / Work Log
 
 ### Plan Replay
