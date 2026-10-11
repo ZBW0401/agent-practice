@@ -33,7 +33,7 @@
 - Commit and push.
 
 ## Current Phase
-Phase 3: 待办清单视图
+Phase 4: 时间轴自动排布 + 番茄钟
 
 ## Prohibitions
 - No force push.

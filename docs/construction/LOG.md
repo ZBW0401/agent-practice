@@ -4,6 +4,53 @@ Append-only. Latest first.
 
 ---
 
+## 2026-10-11 09:59 / Phase 3 / Work Log
+
+### Plan Replay
+待办清单视图：渲染 + 勾选完成 + 新建表单 + 删除。
+
+### Actual Changes
+- index.html：新增新建任务弹窗（科目/时长/截止/优先级/难度/休息时长）
+- style.css：清单项、弹窗、表单样式
+- app.js：重写为视图控制器（渲染、事件委托勾选/删除、表单提交校验）
+
+### Files Changed
+xuecheng/index.html、xuecheng/css/style.css、xuecheng/js/app.js
+
+### Test Log
+- `git diff --check`：通过（exit 0）
+- 浏览器手动走查：新建/勾选/删除/刷新持久化/空科目报错，全部正常（用户确认 ok）
+- 自动化框架：未建立（DOM 逻辑无 CLI 运行环境，手动验证）
+
+### Failures
+无。
+
+### Fixes
+无。
+
+### Retests
+无。
+
+### Documentation Drift
+无。
+
+### Git Status
+- 分支：feature/xuecheng
+- 基线：c82f98d
+- 提交：d4af3e6（已推送 origin/feature/xuecheng）
+- 未跟踪项 .claude/、claude 保持不触碰
+
+### Rollback Judgment
+无需回退。
+
+### Risks
+无新增。
+
+### Next Step
+Phase 4：时间轴自动排布 + 番茄钟。
+
+---
+
 ## 2026-10-11 09:54 / Phase 2 / Work Log
 
 ### Plan Replay
