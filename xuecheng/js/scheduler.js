@@ -27,25 +27,28 @@
   }
 
   /**
-   * 计算刚完成任务尚未走完的「完成后休息」剩余分钟数（锚定当前时间用）。
-   * @param {Object[]} tasks 任务数组
+   * 计算「完成后休息」剩余分钟数（锚定当前时间用）。
+   * 只认「紧挨在第一个未完成任务之前」的那个已完成任务：完成非最前任务不会把休息插到队首。
+   * @param {Object[]} sortedAll 按计划顺序排好的全部任务（含已完成）
    * @param {number} nowMs 当前时间戳（epoch ms）
    * @returns {number} 剩余休息分钟数（0 表示无需先行休息）
    */
-  function pendingRestAfterCompleted(tasks, nowMs) {
-    var latest = null;
-    (tasks || []).forEach(function (t) {
-      if (t.completed && t.completedAt) {
-        if (!latest || t.completedAt > latest.completedAt) {
-          latest = t;
-        }
+  function pendingRestAfterCompleted(sortedAll, nowMs) {
+    var prev = null;
+    var hasPending = false;
+    for (var i = 0; i < sortedAll.length; i++) {
+      var t = sortedAll[i];
+      if (!t.completed) {
+        hasPending = true;
+        break;
       }
-    });
-    if (!latest || !(latest.restAfterMin > 0)) {
+      prev = t;
+    }
+    if (!hasPending || !prev || !(prev.restAfterMin > 0) || !prev.completedAt) {
       return 0;
     }
-    var restMs = latest.restAfterMin * 60 * 1000;
-    var remaining = restMs - (nowMs - latest.completedAt);
+    var restMs = prev.restAfterMin * 60 * 1000;
+    var remaining = restMs - (nowMs - prev.completedAt);
     return remaining > 0 ? Math.ceil(remaining / 60000) : 0;
   }
 
@@ -75,20 +78,20 @@
     }
 
     var order = { high: 0, medium: 1, low: 2 };
-    var pending = (tasks || [])
-      .filter(function (t) { return !t.completed; })
-      .slice()
-      .sort(function (a, b) {
-        if (order[a.priority] !== order[b.priority]) {
-          return order[a.priority] - order[b.priority];
-        }
-        if (a.deadline && b.deadline) {
-          return a.deadline < b.deadline ? -1 : 1;
-        }
-        if (a.deadline) { return -1; }
-        if (b.deadline) { return 1; }
-        return (a.createdAt || '') < (b.createdAt || '') ? -1 : 1;
-      });
+    function byPlan(a, b) {
+      if (order[a.priority] !== order[b.priority]) {
+        return order[a.priority] - order[b.priority];
+      }
+      if (a.deadline && b.deadline) {
+        return a.deadline < b.deadline ? -1 : 1;
+      }
+      if (a.deadline) { return -1; }
+      if (b.deadline) { return 1; }
+      return (a.createdAt || '') < (b.createdAt || '') ? -1 : 1;
+    }
+
+    var sortedAll = (tasks || []).slice().sort(byPlan);
+    var pending = sortedAll.filter(function (t) { return !t.completed; });
 
     var blocks = [];
     var unscheduled = [];
@@ -98,7 +101,10 @@
       var d = new Date(nowMs);
       var nowMin = d.getHours() * 60 + d.getMinutes() + d.getSeconds() / 60;
       cursor = Math.min(Math.max(startMin, nowMin), endMin);
-      var rest = pendingRestAfterCompleted(tasks, nowMs);
+      var rest = pendingRestAfterCompleted(sortedAll, nowMs);
+      if (rest > endMin - cursor) {
+        rest = endMin - cursor;
+      }
       if (rest > 0) {
         blocks.push({
           kind: 'break',
