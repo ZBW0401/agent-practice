@@ -8,6 +8,7 @@
   var T = NS.task;
   var S = NS.store;
   var SCH = NS.scheduler;
+  var N = NS.notify;
 
   var tasks = [];
   var settings = {};
@@ -38,6 +39,7 @@
   var settingsForm = document.getElementById('settings-form');
   var settingsErrors = document.querySelector('[data-view="settings-errors"]');
   var settingsBackdrop = settingsModal.querySelector('.modal__backdrop');
+  var btnTestRemind = document.getElementById('btn-test-remind');
 
   function saveTasks() {
     S.saveTasks(tasks);
@@ -45,6 +47,42 @@
 
   function saveSettings() {
     S.saveSettings(settings);
+  }
+
+  var reminderTimers = [];
+
+  function clearReminders() {
+    for (var r = 0; r < reminderTimers.length; r++) {
+      clearTimeout(reminderTimers[r]);
+    }
+    reminderTimers = [];
+  }
+
+  function scheduleReminders(result) {
+    clearReminders();
+    var now = new Date();
+    var nowMin = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+    result.blocks.forEach(function (b) {
+      if (b.kind !== 'study' && b.kind !== 'break') {
+        return;
+      }
+      var delayMin = b.startMin - nowMin;
+      if (delayMin < 0) {
+        return;
+      }
+      var title;
+      var body;
+      if (b.kind === 'study') {
+        title = '该学习了';
+        body = '开始「' + b.subject + '」（' + SCH.toHHMM(b.startMin) + '–' + SCH.toHHMM(b.endMin) + '）';
+      } else {
+        title = '休息一下';
+        body = '休息 ' + b.durationMin + ' 分钟';
+      }
+      reminderTimers.push(setTimeout(function () {
+        N.show(title, body);
+      }, Math.round(delayMin * 60 * 1000)));
+    });
   }
 
   function renderTodo() {
@@ -143,6 +181,7 @@
     var has = result.blocks.length > 0 || result.unscheduled.length > 0;
     timeline.hidden = !has;
     timelineEmpty.hidden = has;
+    scheduleReminders(result);
   }
 
   function render() {
@@ -282,6 +321,19 @@
     render();
     closeSettings();
   });
+
+  if (btnTestRemind) {
+    btnTestRemind.addEventListener('click', function () {
+      N.show('测试提醒', '页面内提示始终可用；浏览器通知视权限而定');
+    });
+  }
+
+  function ensurePermission() {
+    if (N.supported && N.permission() === 'default') {
+      N.request();
+    }
+  }
+  document.addEventListener('click', ensurePermission);
 
   // —— 初始化 ——
   tasks = S.loadTasks();

@@ -4,6 +4,40 @@ Append-only entries. Latest first.
 
 ---
 
+## 2026-10-11 10:11 / Phase 5 / Start Plan
+
+### Objective
+提醒：notify.js（浏览器通知 + 页面内 Toast）+ 到点触发。
+
+### Affected Layers
+通知层（notify.js）、表现层（index.html Toast、app.js 定时提醒）。
+
+### Repository State
+分支 feature/xuecheng；Phase 4 已提交 eff1acb。
+
+### Planned Files
+新增 xuecheng/js/notify.js；修改 index.html（Toast + 测试提醒按钮 + 脚本）、style.css（Toast）、app.js（定时提醒调度 + 权限请求）。
+
+### Tests
+`git diff --check` + 手动走查（设置里「测试提醒」按钮触发 Toast/通知）。
+
+### Git Baseline
+eff1acb
+
+### Backup Branch
+backup/pre-xuecheng-20261011（已推送）
+
+### Rollback Plan
+`git revert` 本 Phase 提交。
+
+### Acceptance Criteria
+页面打开时到点提醒可触发（测试按钮验证）；明确记录锁屏/后台不推送的限制。
+
+### Explicit Exclusions
+后台推送（纯前端技术不可行）。
+
+---
+
 ## 2026-10-11 10:05 / Phase 4 / 完成
 
 状态：Complete（时间轴自动排布 + 番茄钟）。提交 9b6f545，已推送。测试 11/11 全绿。详见 LOG.md。
