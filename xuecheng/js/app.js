@@ -3,7 +3,7 @@
   'use strict';
 
   var NS = window.Xuecheng = window.Xuecheng || {};
-  NS.version = '1.0.0';
+  NS.version = '1.0.1';
 
   var T = NS.task;
   var S = NS.store;
@@ -151,7 +151,7 @@
 
   function renderTimeline() {
     timelineWindow.textContent = settings.availableStart + '–' + settings.availableEnd;
-    var result = SCH.schedule(tasks, settings);
+    var result = SCH.schedule(tasks, settings, Date.now());
 
     timeline.innerHTML = '';
     result.blocks.forEach(function (b) {
@@ -209,6 +209,11 @@
 
     if (e.target.classList.contains('todo-check')) {
       task.completed = !task.completed;
+      if (task.completed) {
+        task.completedAt = Date.now();
+      } else {
+        delete task.completedAt;
+      }
       saveTasks();
       render();
     } else if (e.target.classList.contains('todo-del')) {
@@ -324,16 +329,11 @@
 
   if (btnTestRemind) {
     btnTestRemind.addEventListener('click', function () {
-      N.show('测试提醒', '页面内提示始终可用；浏览器通知视权限而定');
+      N.request().then(function () {
+        N.show('测试提醒', '页面内提示始终可用；浏览器通知视权限而定');
+      });
     });
   }
-
-  function ensurePermission() {
-    if (N.supported && N.permission() === 'default') {
-      N.request();
-    }
-  }
-  document.addEventListener('click', ensurePermission);
 
   // —— 初始化 ——
   tasks = S.loadTasks();

@@ -27,12 +27,37 @@
   }
 
   /**
+   * 计算刚完成任务尚未走完的「完成后休息」剩余分钟数（锚定当前时间用）。
+   * @param {Object[]} tasks 任务数组
+   * @param {number} nowMs 当前时间戳（epoch ms）
+   * @returns {number} 剩余休息分钟数（0 表示无需先行休息）
+   */
+  function pendingRestAfterCompleted(tasks, nowMs) {
+    var latest = null;
+    (tasks || []).forEach(function (t) {
+      if (t.completed && t.completedAt) {
+        if (!latest || t.completedAt > latest.completedAt) {
+          latest = t;
+        }
+      }
+    });
+    if (!latest || !(latest.restAfterMin > 0)) {
+      return 0;
+    }
+    var restMs = latest.restAfterMin * 60 * 1000;
+    var remaining = restMs - (nowMs - latest.completedAt);
+    return remaining > 0 ? Math.ceil(remaining / 60000) : 0;
+  }
+
+  /**
    * 排程：按可用时间段 + 番茄钟节奏，把未完成任务排进时间轴。
+   * 传入 nowMs 时锚定到「当前时间」：已过去的时段不再往回排，并优先安排刚完成任务的剩余休息。
    * @param {Object[]} tasks 任务数组
    * @param {Object} settings 可用时间段 + 番茄钟配比
+   * @param {number} [nowMs] 当前时间戳（epoch ms），缺省则从可用开始时间排
    * @returns {{blocks:Object[], unscheduled:string[], startMin:number, endMin:number}}
    */
-  function schedule(tasks, settings) {
+  function schedule(tasks, settings, nowMs) {
     var s = settings || {};
     var startMin = toMin(s.availableStart != null ? s.availableStart : DEFAULTS.availableStart);
     var endMin = toMin(s.availableEnd != null ? s.availableEnd : DEFAULTS.availableEnd);
@@ -68,6 +93,23 @@
     var blocks = [];
     var unscheduled = [];
     var cursor = startMin;
+
+    if (nowMs != null) {
+      var d = new Date(nowMs);
+      var nowMin = d.getHours() * 60 + d.getMinutes() + d.getSeconds() / 60;
+      cursor = Math.min(Math.max(startMin, nowMin), endMin);
+      var rest = pendingRestAfterCompleted(tasks, nowMs);
+      if (rest > 0) {
+        blocks.push({
+          kind: 'break',
+          label: '休息',
+          startMin: cursor,
+          endMin: cursor + rest,
+          durationMin: rest
+        });
+        cursor += rest;
+      }
+    }
 
     pending.forEach(function (t) {
       var duration = Number(t.durationMin) || 0;
