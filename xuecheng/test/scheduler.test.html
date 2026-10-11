@@ -42,6 +42,11 @@
       assert('末段为余数 10', r1.blocks[4].kind === 'study' && r1.blocks[4].durationMin === 10);
       assert('结束时间 10:10', r1.blocks[4].endMin === 610 && SCH.toHHMM(r1.blocks[4].endMin) === '10:10');
 
+      // 番茄休息设为 0：不插入零时长休息块
+      var sNoBreak = { availableStart: '09:00', availableEnd: '22:00', pomodoroFocusMin: 25, pomodoroBreakMin: 0 };
+      var r0 = SCH.schedule([t1], sNoBreak);
+      assert('休息=0 时切成 3 个纯学习段', r0.blocks.length === 3 && r0.blocks[0].kind === 'study' && r0.blocks[2].durationMin === 10);
+
       // 完成后休息
       var t2 = { id: '2', subject: '英语', durationMin: 20, priority: 'high', difficulty: 'easy', restAfterMin: 10, completed: false, createdAt: '2026-01-01T00:00:00Z' };
       var r2 = SCH.schedule([t2], s);

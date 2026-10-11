@@ -96,7 +96,7 @@
         });
         cursor += seg;
         remaining -= seg;
-        if (remaining > 0) {
+        if (remaining > 0 && brk > 0) {
           blocks.push({
             kind: 'break',
             label: '休息',
