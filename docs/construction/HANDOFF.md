@@ -1,7 +1,7 @@
 # Handoff — 学程
 
 ## Current State
-全部 6 个 Phase 完成（含 Phase 6 打磨与验证）。分支 feature/xuecheng。功能可用、测试全绿、成功标准三条全部满足。
+v1.0.0 已完成并合并到 main（合并提交 80a3f38）。全部 6 个 Phase 完成，测试全绿，成功标准三条全部满足。
 
 ## Completed
 - Phase 1：静态壳子 + 施工文档
@@ -12,10 +12,10 @@
 - Phase 6：打磨与验证（休息=0 边界修复 + 版本 1.0.0 + 最终回归）
 
 ## Incomplete
-无（功能开发完成）。
+无。
 
 ## Next Tasks
-1. 将 feature/xuecheng 合并回 main（合并前先与用户确认）。
+无（如需新功能/修改，从 main 开新分支继续）。
 
 ## Required Reading
 docs/product/PRODUCT_REQUIREMENTS.md → docs/construction/ARCHITECTURE.md → docs/construction/CONSTRUCTION_PLAN.md → 本文件
@@ -24,19 +24,19 @@ docs/product/PRODUCT_REQUIREMENTS.md → docs/construction/ARCHITECTURE.md → d
 xuecheng/index.html、xuecheng/js/app.js（视图控制器）、xuecheng/js/scheduler.js（排程引擎）、xuecheng/js/task.js、xuecheng/js/store.js、xuecheng/js/notify.js、xuecheng/test/*.html
 
 ## Test Baseline
-自动化未建立；每 Phase 跑 `git diff --check` + 浏览器测试页/手动验证。Phase 6 最终回归：task 9/9、scheduler 12/12 全绿，手动全量通过。
+自动化未建立；浏览器测试页 task 9/9、scheduler 12/12 全绿，手动全量回归通过。
 
 ## Git State
-分支：feature/xuecheng
+已合并到 main（80a3f38，已推送 origin/main）。开发分支 feature/xuecheng 保留。
 
 ## Backup Branch
 backup/pre-xuecheng-20261011（已推送）
 
 ## Latest Commit
-62583d1（Phase 6，待推送）
+main: 80a3f38（merge: 学程 v1.0.0 合并到 main）
 
 ## Push Status
-待推送（本轮 docs 提交后一并推送）
+已推送 origin/main
 
 ## Working Tree
 仅剩未跟踪项 .claude/、claude（不触碰）
