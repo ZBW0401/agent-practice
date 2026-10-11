@@ -16,6 +16,6 @@ git diff --check
 | Phase 1 | Not established | Not established | Not established | ✅ 通过 (exit 0) | 待真机打开 | 通过（自动化未建立，浏览器手动待验证） |
 | Phase 2 | Not established | Not established | Not established | ✅ 通过 | ✅ 单元测试 9/9 | 通过 |
 | Phase 3 | Not established | Not established | Not established | ✅ 通过 | ✅ 手动走查 | 通过 |
-| Phase 4 | - | - | - | - | - | - |
+| Phase 4 | Not established | Not established | Not established | ✅ 通过 | ✅ 单元测试 11/11 | 通过 |
 | Phase 5 | - | - | - | - | - | - |
 | Phase 6 | - | - | - | - | - | - |

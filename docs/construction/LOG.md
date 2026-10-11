@@ -4,6 +4,56 @@ Append-only. Latest first.
 
 ---
 
+## 2026-10-11 10:05 / Phase 4 / Work Log
+
+### Plan Replay
+时间轴自动排布 + 番茄钟：scheduler.js + 设置 UI + 时间轴渲染。
+
+### Actual Changes
+- 新增 xuecheng/js/scheduler.js（排程引擎：排序、切番茄钟段、插休息、超时标记）
+- 新增 xuecheng/test/scheduler.test.html（11 个单元断言）
+- store.js 增加设置持久化（loadSettings/saveSettings）
+- index.html 增加设置按钮、设置弹窗、时间轴窗口提示
+- style.css 增加时间轴样式、图标按钮
+- app.js 增加时间轴渲染 + 设置逻辑
+
+### Files Changed
+xuecheng/js/scheduler.js、store.js、app.js、index.html、css/style.css、test/scheduler.test.html
+
+### Test Log
+- `git diff --check`：通过（exit 0）
+- 浏览器单元测试 scheduler.test.html：通过 11 / 失败 0（用户确认「ok」）
+- 手动走查：排布 / 设置改配比 / 刷新持久化 / 超时标记，正常
+
+### Failures
+无。
+
+### Fixes
+无。
+
+### Retests
+无。
+
+### Documentation Drift
+无。
+
+### Git Status
+- 分支：feature/xuecheng
+- 基线：1815e64
+- 提交：9b6f545（已推送 origin/feature/xuecheng）
+- 未跟踪项 .claude/、claude 保持不触碰
+
+### Rollback Judgment
+无需回退。
+
+### Risks
+无新增。
+
+### Next Step
+Phase 5：提醒（notify.js）。
+
+---
+
 ## 2026-10-11 09:59 / Phase 3 / Work Log
 
 ### Plan Replay
