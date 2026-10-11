@@ -33,7 +33,7 @@
 - Commit and push.
 
 ## Current Phase
-Phase 5: 提醒
+Phase 6: 打磨与验证
 
 ## Prohibitions
 - No force push.

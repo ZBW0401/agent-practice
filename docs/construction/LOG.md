@@ -4,6 +4,54 @@ Append-only. Latest first.
 
 ---
 
+## 2026-10-11 10:11 / Phase 5 / Work Log
+
+### Plan Replay
+提醒：notify.js（浏览器通知 + 页面内 Toast）+ 到点触发。
+
+### Actual Changes
+- 新增 xuecheng/js/notify.js（浏览器通知 + 页面内 Toast 兜底）
+- app.js：scheduleReminders 按时间轴到点调度 setTimeout 提醒；首次点击请求通知权限
+- index.html：新增 Toast 元素、设置弹窗「测试提醒」按钮、加载 notify.js
+- style.css：Toast 样式、btn--full
+
+### Files Changed
+xuecheng/js/notify.js、app.js、index.html、css/style.css
+
+### Test Log
+- `git diff --check`：通过（exit 0）
+- 手动走查：设置弹窗「测试提醒」按钮触发页面内 Toast（用户确认 ok）
+
+### Failures
+无。
+
+### Fixes
+无。
+
+### Retests
+无。
+
+### Documentation Drift
+无。已知限制已在产品需求「假设登记」与 HANDOFF「风险」中标注。
+
+### Git Status
+- 分支：feature/xuecheng
+- 基线：eff1acb
+- 提交：7763c77（已推送 origin/feature/xuecheng）
+- 未跟踪项 .claude/、claude 保持不触碰
+
+### Rollback Judgment
+无需回退。
+
+### Risks
+- 到点提醒仅在页面打开时触发；锁屏/后台/页面关闭不推送（纯前端无后端 + Service Worker 推送，技术边界）。
+- 浏览器系统通知在 file:// 下可能受限（需 HTTPS/localhost）；页面内 Toast 为主力兜底。
+
+### Next Step
+Phase 6：打磨与验证。
+
+---
+
 ## 2026-10-11 10:05 / Phase 4 / Work Log
 
 ### Plan Replay
