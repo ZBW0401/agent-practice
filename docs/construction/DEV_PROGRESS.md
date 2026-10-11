@@ -4,6 +4,12 @@ Append-only entries. Latest first.
 
 ---
 
+## 2026-10-11 09:44 / Phase 1 / 完成
+
+状态：Complete（静态壳子 + 施工文档）。提交 fcf0cb6，已推送。测试与结果见 LOG.md。
+
+---
+
 ## 2026-10-11 09:44 / Phase 1 / Start Plan
 
 ### Objective

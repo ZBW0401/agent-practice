@@ -33,7 +33,7 @@
 - Commit and push.
 
 ## Current Phase
-Phase 1: 静态壳子
+Phase 2: 任务数据模型 + 本地存储
 
 ## Prohibitions
 - No force push.
