@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>学程 — scheduler 单元测试</title>
+  <style>
+    body { font-family: -apple-system, "Segoe UI", "PingFang SC", sans-serif; max-width: 640px; margin: 24px auto; padding: 0 16px; color: #1f2329; }
+    li { margin: 6px 0; }
+    .summary { font-weight: 700; margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <h1>学程 单元测试（scheduler）</h1>
+  <ul id="results"></ul>
+
+  <script src="../js/scheduler.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var results = document.getElementById('results');
+      var pass = 0;
+      var fail = 0;
+
+      function assert(name, cond, extra) {
+        var li = document.createElement('li');
+        li.textContent = (cond ? '✅ ' : '❌ ') + name + (cond ? '' : ' — ' + (extra || ''));
+        results.appendChild(li);
+        if (cond) { pass++; } else { fail++; }
+      }
+
+      var SCH = window.Xuecheng.scheduler;
+      var s = { availableStart: '09:00', availableEnd: '22:00', pomodoroFocusMin: 25, pomodoroBreakMin: 5 };
+
+      // 空任务
+      assert('空任务返回空 blocks', SCH.schedule([], s).blocks.length === 0);
+
+      // 基本排程：60min 任务切成 25/5/25/5/10
+      var t1 = { id: '1', subject: '数学', durationMin: 60, priority: 'medium', difficulty: 'medium', restAfterMin: 0, completed: false, createdAt: '2026-01-01T00:00:00Z' };
+      var r1 = SCH.schedule([t1], s);
+      assert('60min 切成 3 学习段 + 2 休息', r1.blocks.length === 5);
+      assert('休息块时长 5', r1.blocks[1].kind === 'break' && r1.blocks[1].durationMin === 5);
+      assert('末段为余数 10', r1.blocks[4].kind === 'study' && r1.blocks[4].durationMin === 10);
+      assert('结束时间 10:10', r1.blocks[4].endMin === 610 && SCH.toHHMM(r1.blocks[4].endMin) === '10:10');
+
+      // 番茄休息设为 0：不插入零时长休息块
+      var sNoBreak = { availableStart: '09:00', availableEnd: '22:00', pomodoroFocusMin: 25, pomodoroBreakMin: 0 };
+      var r0 = SCH.schedule([t1], sNoBreak);
+      assert('休息=0 时切成 3 个纯学习段', r0.blocks.length === 3 && r0.blocks[0].kind === 'study' && r0.blocks[2].durationMin === 10);
+
+      // 完成后休息
+      var t2 = { id: '2', subject: '英语', durationMin: 20, priority: 'high', difficulty: 'easy', restAfterMin: 10, completed: false, createdAt: '2026-01-01T00:00:00Z' };
+      var r2 = SCH.schedule([t2], s);
+      assert('完成后休息插入', r2.blocks.length === 2 && r2.blocks[1].kind === 'break' && r2.blocks[1].durationMin === 10);
+
+      // 超时未排入
+      var t3 = { id: '3', subject: '超长', durationMin: 9999, priority: 'high', difficulty: 'hard', restAfterMin: 0, completed: false, createdAt: '2026-01-01T00:00:00Z' };
+      var sShort = { availableStart: '09:00', availableEnd: '10:00', pomodoroFocusMin: 25, pomodoroBreakMin: 5 };
+      var r3 = SCH.schedule([t3], sShort);
+      assert('超时任务标记未排入', r3.unscheduled.indexOf('3') >= 0 && r3.blocks.length === 0);
+
+      // 优先级排序
+      var low = { id: 'l', subject: '低', durationMin: 30, priority: 'low', difficulty: 'easy', restAfterMin: 0, completed: false, createdAt: '2026-01-01T00:00:00Z' };
+      var high = { id: 'h', subject: '高', durationMin: 30, priority: 'high', difficulty: 'easy', restAfterMin: 0, completed: false, createdAt: '2026-01-01T00:00:00Z' };
+      var r4 = SCH.schedule([low, high], s);
+      assert('高优先级排前面', r4.blocks[0].taskId === 'h');
+
+      // 已完成排除
+      var done = { id: 'd', subject: '已完成', durationMin: 30, priority: 'high', difficulty: 'easy', restAfterMin: 0, completed: true, createdAt: '2026-01-01T00:00:00Z' };
+      assert('已完成任务不排入', SCH.schedule([done], s).blocks.length === 0);
+
+      // 时间换算
+      assert('toMin 解析', SCH.toMin('09:30') === 570);
+      assert('toHHMM 格式化', SCH.toHHMM(570) === '09:30');
+
+      var summary = document.createElement('p');
+      summary.className = 'summary';
+      summary.textContent = '通过 ' + pass + ' / 失败 ' + fail;
+      results.appendChild(summary);
+    })();
+  </script>
+</body>
+</html>

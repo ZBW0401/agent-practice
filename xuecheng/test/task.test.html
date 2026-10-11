@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>学程 — task/store 单元测试</title>
+  <style>
+    body { font-family: -apple-system, "Segoe UI", "PingFang SC", sans-serif; max-width: 640px; margin: 24px auto; padding: 0 16px; color: #1f2329; }
+    li { margin: 6px 0; }
+    .summary { font-weight: 700; margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <h1>学程 单元测试（task / store）</h1>
+  <ul id="results"></ul>
+
+  <script src="../js/task.js"></script>
+  <script src="../js/store.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var results = document.getElementById('results');
+      var pass = 0;
+      var fail = 0;
+
+      function assert(name, cond, extra) {
+        var li = document.createElement('li');
+        li.textContent = (cond ? '✅ ' : '❌ ') + name + (cond ? '' : ' — ' + (extra || ''));
+        results.appendChild(li);
+        if (cond) { pass++; } else { fail++; }
+      }
+
+      var T = window.Xuecheng.task;
+      var S = window.Xuecheng.store;
+
+      // —— task.create 校验 ——
+      var ok = T.create({ subject: '数学', durationMin: 60 });
+      assert('创建有效任务', ok.ok && ok.task.subject === '数学' && ok.task.durationMin === 60);
+
+      assert('科目去除首尾空格', T.create({ subject: '  英语  ', durationMin: 30 }).task.subject === '英语');
+
+      assert('空科目被拒绝', !T.create({ subject: '', durationMin: 30 }).ok);
+
+      assert('非正时长被拒绝', !T.create({ subject: '物理', durationMin: 0 }).ok && !T.create({ subject: '物理', durationMin: -5 }).ok);
+
+      assert('默认优先级/难度/未完成', (function () {
+        var t = T.create({ subject: '化学', durationMin: 45 }).task;
+        return t.priority === 'medium' && t.difficulty === 'medium' && t.completed === false && t.deadline === null;
+      })());
+
+      assert('负休息时长被拒绝', !T.create({ subject: '生物', durationMin: 20, restAfterMin: -1 }).ok);
+
+      var a = T.create({ subject: '语文', durationMin: 25 }).task;
+      var b = T.create({ subject: '语文', durationMin: 25 }).task;
+      assert('id 唯一', a.id !== b.id && !!a.id);
+
+      // —— store 往返 ——
+      var before = S.loadTasks();
+      S.saveTasks([a, b]);
+      var loaded = S.loadTasks();
+      assert('保存后能读回 2 条', loaded.length === 2 && loaded[0].subject === '语文');
+
+      localStorage.setItem(S.KEYS.tasks, '{坏掉的 json');
+      assert('损坏数据容错为空列表', S.loadTasks().length === 0);
+      S.saveTasks(before); // 还原现场
+
+      var summary = document.createElement('p');
+      summary.className = 'summary';
+      summary.textContent = '通过 ' + pass + ' / 失败 ' + fail;
+      results.appendChild(summary);
+    })();
+  </script>
+</body>
+</html>
