@@ -4,6 +4,12 @@ Append-only entries. Latest first.
 
 ---
 
+## 2026-10-11 09:54 / Phase 2 / 完成
+
+状态：Complete（task.js + store.js + 单元测试页）。提交 8983f4e，已推送。测试 9/9 全绿。详见 LOG.md。
+
+---
+
 ## 2026-10-11 09:54 / Phase 2 / Start Plan
 
 ### Objective

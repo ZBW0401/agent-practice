@@ -33,7 +33,7 @@
 - Commit and push.
 
 ## Current Phase
-Phase 2: 任务数据模型 + 本地存储
+Phase 3: 待办清单视图
 
 ## Prohibitions
 - No force push.

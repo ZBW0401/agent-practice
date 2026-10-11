@@ -1,28 +1,28 @@
 # Handoff — 学程
 
 ## Current State
-Phase 1 完成（静态壳子 + 施工文档）。分支 feature/xuecheng，已推送。
+Phase 2 完成（任务数据模型 + 本地存储）。分支 feature/xuecheng，已推送。
 
 ## Completed
-- 施工文档体系（AGENTS.md + docs/）
-- Phase 1 静态壳子（index.html / style.css / app.js）
+- Phase 1：静态壳子 + 施工文档
+- Phase 2：task.js 模型校验 + store.js localStorage + 单元测试页
 
 ## Incomplete
-- Phase 2–6 未开始
+- Phase 3–6 未开始
 
 ## Next Tasks
-1. Phase 2：任务数据模型（task.js）+ localStorage（store.js）
-2. Phase 3：待办清单视图
-3. Phase 4：时间轴自动排布 + 番茄钟
+1. Phase 3：待办清单视图（渲染 + 勾选完成 + 新建表单）
+2. Phase 4：时间轴自动排布 + 番茄钟
+3. Phase 5：提醒
 
 ## Required Reading
 docs/product/PRODUCT_REQUIREMENTS.md → docs/construction/ARCHITECTURE.md → docs/construction/CONSTRUCTION_PLAN.md → 本文件
 
 ## Important Files
-xuecheng/index.html、xuecheng/css/style.css、xuecheng/js/app.js、docs/construction/CONSTRUCTION_PLAN.md
+xuecheng/index.html、xuecheng/js/task.js、xuecheng/js/store.js、xuecheng/js/app.js、xuecheng/test/task.test.html
 
 ## Test Baseline
-自动化未建立；每 Phase 跑 `git diff --check` + 浏览器手动验证。
+自动化未建立；每 Phase 跑 `git diff --check` + 浏览器测试页/手动验证。
 
 ## Git State
 分支：feature/xuecheng
@@ -31,7 +31,7 @@ xuecheng/index.html、xuecheng/css/style.css、xuecheng/js/app.js、docs/constru
 backup/pre-xuecheng-20261011（已推送）
 
 ## Latest Commit
-fcf0cb6（Phase 1）
+8983f4e（Phase 2）
 
 ## Push Status
 已推送 origin/feature/xuecheng

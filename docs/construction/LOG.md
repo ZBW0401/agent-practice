@@ -4,6 +4,55 @@ Append-only. Latest first.
 
 ---
 
+## 2026-10-11 09:54 / Phase 2 / Work Log
+
+### Plan Replay
+定义 Task 模型 + localStorage 持久化，用浏览器单元测试页验证。
+
+### Actual Changes
+- 新增 xuecheng/js/task.js（Task 模型：create + 校验，枚举 priority/difficulty）
+- 新增 xuecheng/js/store.js（localStorage 适配：loadTasks/saveTasks，损坏数据容错）
+- 新增 xuecheng/test/task.test.html（9 个单元断言）
+- 修改 index.html（按序加载 task.js → store.js → app.js）
+- 修改 app.js（版本 0.2.0 + 数据层冒烟日志）
+
+### Files Changed
+xuecheng/js/task.js、store.js、app.js、xuecheng/test/task.test.html、xuecheng/index.html
+
+### Test Log
+- `git diff --check`：通过（exit 0）
+- 浏览器单元测试 task.test.html：通过 9 / 失败 0（用户确认「全绿」）
+- 自动化框架：未建立（无 Node，用浏览器测试页替代）
+
+### Failures
+无。
+
+### Fixes
+无。
+
+### Retests
+无（一次通过）。
+
+### Documentation Drift
+无。
+
+### Git Status
+- 分支：feature/xuecheng
+- 基线：56bf5d7
+- 提交：8983f4e（已推送 origin/feature/xuecheng）
+- 未跟踪项 .claude/、claude 保持不触碰
+
+### Rollback Judgment
+无需回退。
+
+### Risks
+无新增。
+
+### Next Step
+Phase 3：待办清单视图（渲染 + 勾选完成 + 新建表单）。
+
+---
+
 ## 2026-10-11 09:44 / Phase 1 / Work Log
 
 ### Plan Replay
