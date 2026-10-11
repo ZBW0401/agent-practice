@@ -72,6 +72,18 @@
       assert('toMin 解析', SCH.toMin('09:30') === 570);
       assert('toHHMM 格式化', SCH.toHHMM(570) === '09:30');
 
+      // 锚定当前时间：已过去时段不再往回排
+      var nowMs = new Date(2026, 0, 1, 14, 0, 0).getTime();
+      var r5 = SCH.schedule([t1], s, nowMs);
+      assert('锚定当前时间：14:00 起步', r5.blocks[0].startMin === 840);
+
+      // 刚完成任务仍处「完成后休息」窗口：先排剩余休息
+      var doneAt = new Date(2026, 0, 1, 14, 5, 0).getTime();
+      var now2 = new Date(2026, 0, 1, 14, 8, 0).getTime();
+      var tDone = { id: 'done1', subject: '已完成', durationMin: 30, priority: 'high', difficulty: 'easy', restAfterMin: 10, completed: true, completedAt: doneAt };
+      var r6 = SCH.schedule([tDone, t1], s, now2);
+      assert('完成后休息剩余 7 分钟先行', r6.blocks[0].kind === 'break' && r6.blocks[0].durationMin === 7);
+
       var summary = document.createElement('p');
       summary.className = 'summary';
       summary.textContent = '通过 ' + pass + ' / 失败 ' + fail;

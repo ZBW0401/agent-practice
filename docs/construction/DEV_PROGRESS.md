@@ -4,6 +4,40 @@ Append-only entries. Latest first.
 
 ---
 
+## 2026-10-11 10:36 / v1.0.1 修复 / 完成
+
+状态：Complete（通知反复弹窗 + 时间轴锚定当前时间）。提交 5105659（待推送）。测试 task 9/9、scheduler 14/14 全绿。详见 LOG.md。
+
+---
+
+## 2026-10-11 10:36 / v1.0.1 修复 / Start Plan
+
+### Objective
+修复两个真机回归问题：通知权限反复弹窗；时间轴勾掉任务后回跳初始时间。
+
+### Affected Layers
+领域层（scheduler.js 锚定当前时间 + 完成后剩余休息）、表现层（app.js 通知请求改显式、index.html/style.css 说明）。
+
+### Repository State
+分支 fix/xuecheng-v1.0.1（基于 main e7a2cf2）。
+
+### Planned Files
+修改 scheduler.js、app.js、index.html、style.css、scheduler.test.html。
+
+### Tests
+`git diff --check` + 浏览器单元测试（scheduler 14/14）+ 手动走查。
+
+### Git Baseline
+e7a2cf2（main）
+
+### Acceptance Criteria
+不再反复弹通知；勾掉任务后下一项从当前时间+剩余休息排。
+
+### Explicit Exclusions
+任何新功能。
+
+---
+
 ## 2026-10-11 10:21 / Phase 6 / 完成
 
 状态：Complete（打磨与验证）。提交 62583d1（待推送）。成功标准三条全部满足，测试全绿（task 9/9、scheduler 12/12）。详见 LOG.md。

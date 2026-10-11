@@ -4,6 +4,55 @@ Append-only. Latest first.
 
 ---
 
+## 2026-10-11 10:36 / v1.0.1 修复 / Work Log
+
+### Plan Replay
+修复两个真机回归问题：通知反复弹窗 + 时间轴回跳初始时间。
+
+### Actual Changes
+- app.js：移除 document 全局 click→requestPermission；改「测试提醒」按钮显式请求一次权限
+- app.js：勾选完成记录 completedAt，反选清除
+- scheduler.js：schedule 增加 nowMs 参数，锚定当前时间（不往回排）；pendingRestAfterCompleted 先行排刚完成任务剩余休息
+- index.html / style.css：设置弹窗增加通知限制说明（.field-hint）
+- scheduler.test.html：新增 2 条用例（12→14）
+
+### Files Changed
+xuecheng/js/scheduler.js、xuecheng/js/app.js、xuecheng/index.html、xuecheng/css/style.css、xuecheng/test/scheduler.test.html
+
+### Test Log
+- `git diff --check`：通过（exit 0）
+- 浏览器单元测试 scheduler.test.html：通过 14 / 失败 0（用户确认「全绿」）
+- 手动走查：不再反复弹通知；勾掉任务后时间轴从当前时间+剩余休息继续（用户确认「全绿」）
+
+### Failures
+无（本轮为修复已上报问题）。
+
+### Fixes
+- 通知反复弹窗：全局自动请求权限 → 仅显式按钮请求一次
+- 时间轴回跳：固定 availableStart → 锚定当前时间 + 完成后剩余休息
+
+### Retests
+修复后 14/14 全绿 + 手动走查通过。
+
+### Documentation Drift
+无。产品需求「提醒」与「自动排布」语义在 v1.0.1 澄清：时间轴锚定当前时间。
+
+### Git Status
+- 分支：fix/xuecheng-v1.0.1
+- 基线：e7a2cf2（main）
+- 提交：5105659（待推送）
+
+### Rollback Judgment
+无需回退。
+
+### Risks
+无新增。
+
+### Next Step
+合并 fix/xuecheng-v1.0.1 回 main。
+
+---
+
 ## 2026-10-11 10:21 / Phase 6 / Work Log
 
 ### Plan Replay
